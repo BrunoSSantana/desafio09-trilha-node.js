@@ -12,6 +12,15 @@ export const handle: APIGatewayProxyHandler = async (event) => {
   const { id } = event.pathParameters;
   const { title, deadline } = JSON.parse(event.body) as ICreateTodo;
 
+  if (!title || !deadline) {
+    return {
+      statusCode: 400,
+      body: JSON.stringify({
+        message: "missing content"
+      })
+    }
+  }
+
   await document.put({
     TableName: "todos",
     Item: {
