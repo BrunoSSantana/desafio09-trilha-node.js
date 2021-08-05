@@ -1,6 +1,7 @@
 import { document } from "../utils/dynamodbClient";
 import { v4 as uuidV4 } from "uuid"
 import { APIGatewayProxyHandler } from "aws-lambda";
+import * as dayjs from "dayjs";
 
 interface ICreateTodo {
 title: string;
@@ -18,8 +19,8 @@ export const handle: APIGatewayProxyHandler = async (event) => {
       user_id: id,
       title,
       done: false,
-      deadline: new Date(deadline),
-      createdAt: new Date(),
+      deadline: dayjs(deadline).format(),
+      createdAt: dayjs().format(),
       updatedAt: null
     }
   })
